@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+    overscroll-behavior: none;
+  }
+}
+
+/* Custom diffuse ambient shadows from design spec */
+.shadow-surface-resting {
+  box-shadow: 
+    0px 7px 16px 0px rgba(0, 0, 0, 0.08),
+    0px 30px 30px 0px rgba(0, 0, 0, 0.05),
+    0px 67px 40px 0px rgba(0, 0, 0, 0.03),
+    0px 119px 48px 0px rgba(0, 0, 0, 0.01);
+}
+
+.shadow-surface-elevated {
+  box-shadow: 
+    0px 9px 21px 0px rgba(25, 23, 28, 0.10),
+    0px 38px 38px 0px rgba(25, 23, 28, 0.07),
+    0px 85px 51px 0px rgba(25, 23, 28, 0.04),
+    0px 152px 61px 0px rgba(25, 23, 28, 0.01);
+}
+
+.shadow-floating-dock {
+  box-shadow: 
+    0px 4px 9px 0px rgba(0, 0, 0, 0.10),
+    0px 16px 16px 0px rgba(0, 0, 0, 0.07),
+    0px 35px 21px 0px rgba(0, 0, 0, 0.04),
+    0px 63px 25px 0px rgba(0, 0, 0, 0.01);
+}
+
+/* Material symbol utilities */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.material-symbols-outlined.fill-1 {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
