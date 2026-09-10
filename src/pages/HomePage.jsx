@@ -6,6 +6,10 @@ import { TiltCard } from '../components/motion/TiltCard';
 import { ProximityFloat } from '../components/motion/ProximityFloat';
 
 export function HomePage({ onOpenEligibility }) {
+  const HERO_IMAGE = "/image.png";
+
+
+
   const destinations = [
     {
       title: "Schengen Europe",
@@ -45,16 +49,12 @@ export function HomePage({ onOpenEligibility }) {
     }
   ];
 
-  // Exact image URLs from Stitch project 5576737861905440358 favorite screens
-  const HERO_IMAGE = "/image.png";
-
   const tourHighlights = [
     {
       title: "Grand European Alpine & Riviera Tour",
       duration: "10 Days / 9 Nights",
       destinations: "Zurich • Lucerne • Paris • Nice",
       price: "₹1,85,000",
-      // Stitch favorite screen: Tour Packages & Getaways desktop — hero travel image
       image: "https://lh3.googleusercontent.com/aida/AEtjO1XpTtE4PD4s_dAGWagRdw_9Scxjul1_OAXJY4OSvUnRbBkZf_JNPBNQ7ss9FvoB2-rUaLojAb7pw96gvM_45xbd6RcMBSOoeovWNyGXPHvlyMWjOYSmtBTEDSW9_FXhluf-UFIj76cgXEdts5spkRlWJTFM2W8Ykdr6VzFFyq7LoJaSDZWYdAmLiPeQIIgcS5fMeK5d1JY8sfaTXWmbI2h6SD2RF4lpMr_-GwDfH6GasvjCnbsY2GDsZbI"
     },
     {
@@ -62,10 +62,18 @@ export function HomePage({ onOpenEligibility }) {
       duration: "8 Days / 7 Nights",
       destinations: "Tokyo • Kyoto • Mount Fuji • Osaka",
       price: "₹2,10,000",
-      // Stitch project image: cinematic travel landscape — scenic mountain destination
       image: "https://lh3.googleusercontent.com/aida/AEtjO1VgrX0RmzS22PKvffCLmsO15-3tfsKGIjYtJtrWXlSXULJWv9t1wDTO0dwK6UUdrWKdqll0aOtFZN35TRYNwSGxazZ_zQ9weu02vFi5y-IdutUbGHBL9uwML1ukTS63uD4qJNgOt44AOrCRUDHcrTIJsdRmXlvq4iRPOELOBeyDRU3tWKhCslpv0DVhRYBmjP8K_4C_PXZv--maM-DuRPjeVfj0fvVQhwGXBlpBqfAtDLYwhhNnHs9veg"
     }
   ];
+
+  const metrics = [
+    { value: '99.4%', label: 'Visa Approval Rate', badge: '⚙ Consulate Audited', badgeClass: 'bg-lavender-mist/30 text-primary' },
+    { value: '45+', label: 'Global Destinations', badge: '🌐 World Coverage', badgeClass: 'bg-sky-tint text-secondary' },
+    { value: '12,000+', label: 'Visas Processed', badge: '★ 4.9/5 Rating', badgeClass: 'bg-volt/40 text-ink' },
+    { value: '10+ Years', label: 'Diplomatic Experience', badge: '▣ Est. in Ooty', badgeClass: 'bg-surface-container text-slate' },
+  ];
+
+  const fastFilingTags = ['Schengen 29', 'USA B1/B2', 'UK Visitor', 'Canada & Australia'];
 
   return (
     <>
@@ -75,161 +83,147 @@ export function HomePage({ onOpenEligibility }) {
         canonicalUrl="https://yoviavisaservices.com"
       />
 
-      <main className="space-y-24">
+      <main className="space-y-0">
 
-        {/* HERO SECTION */}
-        <section className="relative pt-6 pb-12 sm:pt-12 sm:pb-20 overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        {/* ==================== HERO SECTION ==================== */}
+        <section className="relative overflow-hidden">
+          {/* Subtle background image */}
+          <div className="absolute inset-0 z-0">
+            <img
+              src={HERO_IMAGE}
+              alt=""
+              aria-hidden="true"
+              className="w-full h-full object-cover opacity-[0.07]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-studio-off-white via-studio-off-white/95 to-studio-off-white/70" />
+          </div>
 
-              {/* Left Column: Copy & CTAs */}
-              <div className="lg:col-span-7 space-y-6">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-studio-off-white border border-hairline-gray shadow-sm">
-                  <span className="w-2 h-2 rounded-full bg-volt animate-pulse" />
-                  <span className="text-xs font-bold tracking-wide uppercase text-ink">
-                    Institutional Precision & Global Mobility
-                  </span>
+          <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-10 pt-10 pb-6">
+
+            {/* Top Status Bar */}
+            <div className="flex flex-col md:flex-row items-center justify-between gap-3 mb-8 sm:mb-12">
+              <div className="inline-flex items-center gap-2 rounded-full bg-lavender-mist/40 px-4 py-2 text-deep-plum shadow-sm backdrop-blur-md border border-primary/10">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                </span>
+                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider">
+                  Nilgiris Authorized Global Mobility Desk
+                </span>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-slate">
+                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-pure-white/80 border border-hairline-gray shadow-sm">
+                  <span className="w-2 h-2 rounded-full bg-primary" />
+                  <span className="font-semibold text-ink">VFS & Embassy Compliant</span>
+                </span>
+                <span className="hidden sm:inline-block w-px h-4 bg-hairline-gray" />
+                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-pure-white border border-hairline-gray font-semibold text-ink shadow-sm">
+                  <span className="material-symbols-outlined text-sm text-primary">location_on</span>
+                  <span>Direct Office in Ooty</span>
                 </div>
+              </div>
+            </div>
 
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-ink tracking-tight leading-[1.08]">
-                  Kinetic Precision for Worldwide Visa &amp; Tour Advisory
+            {/* Grid: Left Copy + Right Hero Visual */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+
+              {/* LEFT COLUMN — Copy & CTAs */}
+              <div className="lg:col-span-7 space-y-6 text-left">
+                <h1 className="text-3xl sm:text-5xl lg:text-[56px] font-extrabold text-ink tracking-tight leading-[1.1]">
+                  <span className="relative inline-block">
+                    <span className="relative z-10 text-ink">Hassle-Free</span>
+                    <span className="absolute bottom-1 left-0 w-full h-[38%] bg-volt -z-0 rounded-sm" />
+                  </span>{' '}
+                  Visa & Travel Solutions
                 </h1>
 
-                <p className="text-base sm:text-lg text-slate max-w-2xl leading-relaxed">
-                  Seamless visa approvals, expedited embassy appointments, and luxury international itineraries managed directly from our flagship consultancy hub in Ooty.
+                <p className="text-base sm:text-lg text-slate max-w-xl leading-relaxed">
+                  Premier international visa documentation, embassy protocol compliance, and bespoke global travel itineraries engineered right from our Ooty advisory desk.
                 </p>
 
-                <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
                   <MagneticButton
                     onClick={onOpenEligibility}
-                    className="bg-primary-container text-pure-white hover:bg-primary font-bold text-base px-8 py-4 rounded-pill shadow-surface-resting hover:shadow-surface-elevated text-center"
+                    className="bg-primary-container text-pure-white hover:bg-primary font-bold text-sm px-7 py-3.5 rounded-pill shadow-surface-resting hover:shadow-surface-elevated text-center inline-flex items-center justify-center gap-2 transition-all"
                   >
-                    Initiate Visa Check
+                    <span>Apply for Visa</span>
+                    <span className="material-symbols-outlined text-lg">arrow_forward</span>
                   </MagneticButton>
 
                   <Link
                     to="/tours"
-                    className="inline-flex items-center justify-center gap-2 bg-pure-white text-ink hover:bg-studio-off-white border border-hairline-gray font-semibold text-base px-6 py-4 rounded-pill transition-colors text-center"
+                    className="inline-flex items-center justify-center gap-2 bg-ink hover:bg-input-dark-fill text-pure-white font-semibold text-sm px-6 py-3.5 rounded-pill transition-colors text-center shadow-sm"
                   >
                     <span>Explore Tour Packages</span>
-                    <span className="material-symbols-outlined text-lg">arrow_forward</span>
+                    <span className="material-symbols-outlined text-lg">travel_explore</span>
                   </Link>
                 </div>
 
-                {/* Key Metrics Pill Bar */}
-                {/* <div className="pt-8 border-t border-hairline-gray grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  <div>
-                    <p className="text-2xl sm:text-3xl font-extrabold text-ink">99.2%</p>
-                    <p className="text-xs font-semibold text-slate mt-1">Approval Success</p>
-                  </div>
-                  <div>
-                    <p className="text-2xl sm:text-3xl font-extrabold text-ink">14,800+</p>
-                    <p className="text-xs font-semibold text-slate mt-1">Visas Granted</p>
-                  </div>
-                  <div>
-                    <p className="text-2xl sm:text-3xl font-extrabold text-ink">48 hrs</p>
-                    <p className="text-xs font-semibold text-slate mt-1">Rapid Audit</p>
-                  </div>
-                  <div>
-                    <p className="text-2xl sm:text-3xl font-extrabold text-ink">45+</p>
-                    <p className="text-xs font-semibold text-slate mt-1">Destinations</p>
-                  </div>
-                </div> */}
-                <section class="w-full bg-[#f5f5f7] px-4 py-7 sm:px-6 lg:px-10">
-                  <div class="mx-auto grid max-w-7xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-
-
-                    <div class="flex min-h-[110px] flex-col items-center justify-center rounded-2xl bg-white px-4 py-4 text-center shadow-[0_4px_15px_rgba(0,0,0,0.06)]">
-                      <h3 class="text-3xl font-extrabold leading-none tracking-tight text-black sm:text-4xl">
-                        99.4%
-                      </h3>
-
-                      <p class="mt-1 text-[10px] font-medium text-gray-600 sm:text-[11px]">
-                        Visa Approval Rate
-                      </p>
-
-                      <span class="mt-2 rounded-full bg-purple-50 px-2.5 py-1 text-[9px] font-medium text-purple-700">
-                        ⚙ Consulate Audited
-                      </span>
-                    </div>
-
-
-                    <div class="flex min-h-[110px] flex-col items-center justify-center rounded-2xl bg-white px-4 py-4 text-center shadow-[0_4px_15px_rgba(0,0,0,0.06)]">
-                      <h3 class="text-3xl font-extrabold leading-none tracking-tight text-black sm:text-4xl">
-                        45+
-                      </h3>
-
-                      <p class="mt-1 text-[10px] font-medium text-gray-600 sm:text-[11px]">
-                        Global Destinations
-                      </p>
-
-                      <span class="mt-2 rounded-full bg-sky-50 px-2.5 py-1 text-[9px] font-medium text-sky-700">
-                        🌐 World Coverage
-                      </span>
-                    </div>
-
-
-                    <div class="flex min-h-[110px] flex-col items-center justify-center rounded-2xl bg-white px-4 py-4 text-center shadow-[0_4px_15px_rgba(0,0,0,0.06)]">
-                      <h3 class="text-3xl font-extrabold leading-none tracking-tight text-black sm:text-4xl">
-                        12,000+
-                      </h3>
-
-                      <p class="mt-1 text-[10px] font-medium text-gray-600 sm:text-[11px]">
-                        Visas Processed
-                      </p>
-
-                      <span class="mt-2 rounded-full bg-yellow-100 px-2.5 py-1 text-[9px] font-medium text-gray-800">
-                        ★ 4.9/5 Rating
-                      </span>
-                    </div>
-
-
-                    <div class="flex min-h-[110px] flex-col items-center justify-center rounded-2xl bg-white px-4 py-4 text-center shadow-[0_4px_15px_rgba(0,0,0,0.06)]">
-                      <h3 class="text-3xl font-extrabold leading-none tracking-tight text-black sm:text-4xl">
-                        10+ Years
-                      </h3>
-
-                      <p class="mt-1 text-[10px] font-medium text-gray-600 sm:text-[11px]">
-                        Diplomatic Experience
-                      </p>
-
-                      <span class="mt-2 rounded-full bg-gray-100 px-2.5 py-1 text-[9px] font-medium text-gray-700">
-                        ▣ Est. in Ooty
-                      </span>
-                    </div>
-
-                  </div>
-                </section>
+                {/* Fast Filing Tags */}
+                <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-hairline-gray/60">
+                  <span className="text-[10px] sm:text-[11px] font-extrabold tracking-wider uppercase text-slate mr-1">Fast Filing For:</span>
+                  {fastFilingTags.map(tag => (
+                    <span key={tag} className="px-3 py-1 rounded-full bg-pure-white border border-hairline-gray text-xs font-semibold text-ink shadow-xs">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
 
-              {/* Right Column: Hero Visual Graphic */}
-              <div className="lg:col-span-5 relative">
+              {/* RIGHT COLUMN — Hero Visual Card */}
+              <div className="lg:col-span-5 w-full max-w-lg lg:max-w-none mx-auto">
                 <ProximityFloat factor={0.03}>
-                  <TiltCard maxTilt={10} className="w-full rounded-card overflow-hidden shadow-surface-elevated border border-hairline-gray bg-pure-white p-3">
-                    <div className="relative aspect-[4/3] rounded-[32px] overflow-hidden">
+                  <TiltCard maxTilt={8} className="w-full rounded-2xl overflow-hidden shadow-surface-elevated border border-hairline-gray bg-pure-white p-3">
+                    <div className="relative aspect-[4/3] rounded-[20px] overflow-hidden group">
                       <img
                         src={HERO_IMAGE}
-                        alt="Cinematic luxury travel destination landscape featuring European peaks and azure ocean coastal cliffs — Stitch Yovia Visa Services hero"
-                        className="w-full h-full object-cover"
+                        alt="Cinematic luxury travel destination landscape — Yovia Visa Services Ooty flagship"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent flex flex-col justify-end p-6 text-pure-white">
-                        <span className="px-3 py-1 bg-volt text-ink text-xs font-extrabold rounded-full w-max mb-2">
+                      <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/30 to-transparent flex flex-col justify-end p-5 sm:p-6 text-pure-white">
+                        <span className="px-3 py-1 bg-volt text-ink text-[11px] font-extrabold rounded-full w-max mb-2 shadow-xs">
                           Verified Advisory Status
                         </span>
-                        <h2 className="text-xl font-bold">Ooty Flagship Consultancy</h2>
-                        <p className="text-xs text-sky-tint mt-1">Commercial Road, Charing Cross, Ooty</p>
+                        <h2 className="text-lg sm:text-xl font-bold">Ooty Flagship Consultancy</h2>
+                        <p className="text-xs text-sky-tint mt-1 flex items-center gap-1">
+                          <span className="material-symbols-outlined text-sm text-volt">location_on</span>
+                          <span>Near Honeymoon Boat House, North Lake Road, Ooty</span>
+                        </p>
                       </div>
                     </div>
                   </TiltCard>
                 </ProximityFloat>
               </div>
-
             </div>
+
+            {/* Bottom Bar */}
+
           </div>
         </section>
 
-        {/* POPULAR DESTINATIONS GRID */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* ==================== METRICS STAT CARDS ==================== */}
+        <section className="w-full bg-studio-off-white px-4 sm:px-6 lg:px-10 py-8">
+          <div className="mx-auto max-w-[1200px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {metrics.map((m, i) => (
+              <div key={i} className="flex min-h-[110px] flex-col items-center justify-center rounded-2xl bg-pure-white px-4 py-5 text-center shadow-[0_4px_15px_rgba(0,0,0,0.06)] border border-hairline-gray/50 hover:shadow-surface-resting transition-shadow">
+                <h3 className="text-3xl sm:text-4xl font-extrabold leading-none tracking-tight text-ink">
+                  {m.value}
+                </h3>
+                <p className="mt-1.5 text-[11px] font-medium text-slate">
+                  {m.label}
+                </p>
+                <span className={`mt-2.5 rounded-full px-2.5 py-1 text-[9px] font-semibold ${m.badgeClass}`}>
+                  {m.badge}
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ==================== POPULAR DESTINATIONS GRID ==================== */}
+        <section className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-10 py-16">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
               <div className="text-xs font-bold tracking-widest uppercase text-primary mb-1">
@@ -250,7 +244,7 @@ export function HomePage({ onOpenEligibility }) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {destinations.map((item, idx) => (
-              <TiltCard key={idx} maxTilt={8} className="bg-pure-white rounded-card p-6 shadow-surface-resting border border-hairline-gray flex flex-col justify-between h-full">
+              <TiltCard key={idx} maxTilt={8} className="bg-pure-white rounded-2xl p-6 shadow-surface-resting border border-hairline-gray flex flex-col justify-between h-full">
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <span className={`px-3 py-1 rounded-full text-xs font-bold ${item.bgColor} ${item.accentColor}`}>
@@ -281,8 +275,8 @@ export function HomePage({ onOpenEligibility }) {
           </div>
         </section>
 
-        {/* TOUR PACKAGES FEATURE TEASER */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* ==================== TOUR PACKAGES FEATURE TEASER ==================== */}
+        <section className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-10 pb-16">
           <div className="bg-ink text-pure-white rounded-[40px] p-8 sm:p-12 relative overflow-hidden shadow-surface-elevated">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
@@ -330,9 +324,9 @@ export function HomePage({ onOpenEligibility }) {
           </div>
         </section>
 
-        {/* HIGH TRUST / OOTY OFFICE SECTION */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-pure-white border border-hairline-gray rounded-card p-8 sm:p-12 shadow-surface-resting">
+        {/* ==================== OOTY OFFICE / TRUST SECTION ==================== */}
+        <section className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-10 pb-20">
+          <div className="bg-pure-white border border-hairline-gray rounded-2xl p-8 sm:p-12 shadow-surface-resting">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
               <div className="lg:col-span-6 space-y-4">
@@ -353,7 +347,7 @@ export function HomePage({ onOpenEligibility }) {
                   </div>
                   <div className="flex items-center gap-3 text-sm text-ink font-semibold">
                     <span className="material-symbols-outlined text-secondary">call</span>
-                    Direct Hotline: +91 94431 00000
+                    Direct Hotline: +91 93458 60732
                   </div>
                 </div>
 
@@ -368,7 +362,7 @@ export function HomePage({ onOpenEligibility }) {
                 </div>
               </div>
 
-              <div className="lg:col-span-6 bg-studio-off-white rounded-3xl p-6 border border-hairline-gray space-y-4">
+              <div className="lg:col-span-6 bg-studio-off-white rounded-2xl p-6 border border-hairline-gray space-y-4">
                 <h3 className="text-lg font-bold text-ink flex items-center gap-2">
                   <span className="material-symbols-outlined text-primary">verified_user</span>
                   Why Clients Trust Yovia Visa Services

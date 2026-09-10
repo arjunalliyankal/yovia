@@ -18,15 +18,22 @@ export function Navbar({ onOpenEligibility }) {
   return (
     <header className="sticky top-4 z-50 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
       <nav className="bg-pure-white/90 backdrop-blur-md border border-hairline-gray/80 rounded-pill shadow-floating-dock px-4 sm:px-6 py-3 flex items-center justify-between transition-all duration-300">
-        
+
         {/* Brand Lockup */}
         <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 rounded-full bg-ink text-pure-white flex items-center justify-center font-bold text-lg shadow-sm group-hover:scale-105 transition-transform duration-300">
-            Y
+          <div className="w-10 h-10 rounded-full bg-pure-white border border-hairline-gray/80 shadow-xs flex items-center justify-center p-1 overflow-hidden group-hover:scale-105 group-hover:border-primary/40 transition-all duration-300 shrink-0">
+            <img
+              src="/logo.png"
+              alt="Yovia Visa Services Logo"
+              className="w-full h-full object-contain"
+              onError={(e) => {
+                e.currentTarget.src = "/images/logo.png";
+              }}
+            />
           </div>
           <div className="flex flex-col">
             <span className="font-extrabold text-lg tracking-tight text-ink leading-none">Yovia</span>
-            <span className="text-[10px] font-semibold tracking-wider text-slate uppercase mt-0.5">Visa & Travel Advisory</span>
+            <span className="text-[10px] font-semibold tracking-wider text-slate uppercase mt-0.5">GLOBAL VISA CONSULTANTS</span>
           </div>
         </Link>
 
@@ -36,11 +43,10 @@ export function Navbar({ onOpenEligibility }) {
             <Link
               key={link.path}
               to={link.path}
-              className={`px-4 py-2 text-sm font-semibold rounded-pill transition-all duration-200 ${
-                isActive(link.path)
-                  ? 'bg-pure-white text-ink shadow-sm'
-                  : 'text-slate hover:text-ink hover:bg-pure-white/50'
-              }`}
+              className={`px-4 py-2 text-sm font-semibold rounded-pill transition-all duration-200 ${isActive(link.path)
+                ? 'bg-pure-white text-ink shadow-sm'
+                : 'text-slate hover:text-ink hover:bg-pure-white/50'
+                }`}
             >
               {link.name}
             </Link>
@@ -79,11 +85,10 @@ export function Navbar({ onOpenEligibility }) {
                 key={link.path}
                 to={link.path}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`px-4 py-3 text-base font-semibold rounded-2xl transition-colors ${
-                  isActive(link.path)
-                    ? 'bg-studio-off-white text-ink font-bold'
-                    : 'text-slate hover:text-ink hover:bg-studio-off-white/50'
-                }`}
+                className={`px-4 py-3 text-base font-semibold rounded-2xl transition-colors ${isActive(link.path)
+                  ? 'bg-studio-off-white text-ink font-bold'
+                  : 'text-slate hover:text-ink hover:bg-studio-off-white/50'
+                  }`}
               >
                 {link.name}
               </Link>

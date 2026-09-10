@@ -10,8 +10,15 @@ export function Footer() {
           {/* Column 1 & 2: Brand & Philosophy */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary-container text-pure-white flex items-center justify-center font-bold text-xl">
-                Y
+              <div className="w-10 h-10 rounded-full bg-pure-white p-1 overflow-hidden shrink-0 shadow-sm flex items-center justify-center">
+                <img
+                  src="/logo.png"
+                  alt="Yovia Logo"
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    e.currentTarget.src = "/images/logo.png";
+                  }}
+                />
               </div>
               <span className="font-extrabold text-2xl tracking-tight">Yovia Visa Services</span>
             </div>
