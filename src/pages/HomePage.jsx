@@ -4,6 +4,7 @@ import { SeoMeta } from '../components/ui/SeoMeta';
 import { MagneticButton } from '../components/motion/MagneticButton';
 import { TiltCard } from '../components/motion/TiltCard';
 import { ProximityFloat } from '../components/motion/ProximityFloat';
+import { ClientReviewsSection } from '../components/sections/ClientReviewsSection';
 
 export function HomePage({ onOpenEligibility }) {
   const HERO_IMAGE = "/image.png";
@@ -323,6 +324,9 @@ export function HomePage({ onOpenEligibility }) {
             </div>
           </div>
         </section>
+
+        {/* ==================== CLIENT REVIEWS SECTION ==================== */}
+        <ClientReviewsSection />
 
         {/* ==================== OOTY OFFICE / TRUST SECTION ==================== */}
         <section className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-10 pb-20">
