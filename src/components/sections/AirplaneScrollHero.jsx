@@ -20,6 +20,8 @@ export function AirplaneScrollHero({ onOpenEligibility }) {
     return () => mediaQuery.removeEventListener?.('change', handleChange);
   }, []);
 
+  const isTransitioningRef = useRef(false);
+
   // Smooth scroll event listener
   useEffect(() => {
     if (isReducedMotion) return;
@@ -27,6 +29,7 @@ export function AirplaneScrollHero({ onOpenEligibility }) {
     let ticking = false;
 
     const handleScroll = () => {
+      if (isTransitioningRef.current) return;
       if (!heroRef.current) return;
 
       if (!ticking) {
@@ -74,10 +77,45 @@ export function AirplaneScrollHero({ onOpenEligibility }) {
   };
 
   const handleApplyForVisa = () => {
-    const targetElement = document.getElementById('featured-visa-programs');
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (isTransitioningRef.current) return;
+    isTransitioningRef.current = true;
+
+    // Smoothly animate airplane frame to the last frame (progress 1.0)
+    const startProgress = scrollProgress;
+    const targetProgress = 1.0;
+    const duration = 950; // duration in ms for cinematic flight to horizon
+    const startTime = performance.now();
+
+    const animateToLastFrame = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const t = Math.min(1, elapsed / duration);
+      // Smooth cubic ease out
+      const easedT = 1 - Math.pow(1 - t, 3);
+      const current = startProgress + (targetProgress - startProgress) * easedT;
+
+      setScrollProgress(current);
+
+      if (t < 1) {
+        requestAnimationFrame(animateToLastFrame);
+      } else {
+        // Airplane reached the final frame; smoothly scroll to Featured Visa Programs
+        const targetElement = document.getElementById('featured-visa-programs');
+        if (targetElement) {
+          const navOffset = 85;
+          const elementPosition = targetElement.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.scrollY - navOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth',
+          });
+        }
+        setTimeout(() => {
+          isTransitioningRef.current = false;
+        }, 850);
+      }
+    };
+
+    requestAnimationFrame(animateToLastFrame);
   };
 
   // Compute text fade and move transforms based on scrollProgress
