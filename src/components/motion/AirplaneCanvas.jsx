@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 
-const TOTAL_FRAMES = 173;
+const TOTAL_FRAMES = 165;
 
 function getFrameUrl(index) {
   const paddedIndex = String(index + 1).padStart(4, '0');
@@ -12,14 +12,18 @@ export function AirplaneCanvas({ progress = 0, isReducedMotion = false }) {
   const imagesRef = useRef({});
   const loadedCountRef = useRef(0);
   const animationFrameRef = useRef(null);
+  
+  // Smooth target lerp state
+  const targetProgressRef = useRef(progress);
+  const currentProgressRef = useRef(progress);
   const lastDrawnFrameRef = useRef(-1);
+
   const [isFirstFrameLoaded, setIsFirstFrameLoaded] = useState(false);
 
-  // Compute frame index (0 to 172)
-  const currentFrameIndex = Math.min(
-    TOTAL_FRAMES - 1,
-    Math.max(0, Math.floor(progress * (TOTAL_FRAMES - 1)))
-  );
+  // Keep target progress updated
+  useEffect(() => {
+    targetProgressRef.current = progress;
+  }, [progress]);
 
   // Helper to draw a given frame onto the canvas
   const drawFrame = useCallback((frameIndex) => {
@@ -63,7 +67,7 @@ export function AirplaneCanvas({ progress = 0, isReducedMotion = false }) {
 
   // Preloading Strategy:
   // 1. Instantly load frame 0 to render fallback immediately
-  // 2. Preload remaining frames in prioritized batches
+  // 2. Preload remaining frames in prioritized batches up to frame 165
   useEffect(() => {
     let isMounted = true;
 
@@ -80,8 +84,8 @@ export function AirplaneCanvas({ progress = 0, isReducedMotion = false }) {
 
     // Queue preloading remaining frames in background
     const loadRemainingFrames = async () => {
-      // Priority 1: Key milestones (every 5th frame) for quick visual responsiveness
-      for (let i = 1; i < TOTAL_FRAMES; i += 5) {
+      // Priority 1: Key milestones (every 4th frame) for quick visual responsiveness
+      for (let i = 1; i < TOTAL_FRAMES; i += 4) {
         if (!isMounted) return;
         if (!imagesRef.current[i]) {
           const img = new Image();
@@ -107,7 +111,6 @@ export function AirplaneCanvas({ progress = 0, isReducedMotion = false }) {
       }
     };
 
-    // Small delay to allow initial DOM render to settle
     const timer = setTimeout(() => {
       loadRemainingFrames();
     }, 100);
@@ -130,36 +133,58 @@ export function AirplaneCanvas({ progress = 0, isReducedMotion = false }) {
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
 
-      const targetFrame = isReducedMotion ? 0 : currentFrameIndex;
+      const targetFrame = isReducedMotion
+        ? 0
+        : Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.floor(currentProgressRef.current * (TOTAL_FRAMES - 1))));
       drawFrame(targetFrame);
     };
 
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [drawFrame, currentFrameIndex, isReducedMotion]);
+  }, [drawFrame, isReducedMotion]);
 
-  // Redraw when progress updates via rAF
+  // Smooth animation render loop with linear interpolation (lerp)
   useEffect(() => {
     if (isReducedMotion) {
       drawFrame(0);
       return;
     }
 
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
-    }
+    let running = true;
 
-    animationFrameRef.current = requestAnimationFrame(() => {
-      drawFrame(currentFrameIndex);
-    });
+    const renderLoop = () => {
+      if (!running) return;
+
+      // Lerp factor: 0.15 for buttery smooth damping without delay
+      const diff = targetProgressRef.current - currentProgressRef.current;
+      if (Math.abs(diff) > 0.0001) {
+        currentProgressRef.current += diff * 0.15;
+      } else {
+        currentProgressRef.current = targetProgressRef.current;
+      }
+
+      const frameIndex = Math.min(
+        TOTAL_FRAMES - 1,
+        Math.max(0, Math.floor(currentProgressRef.current * (TOTAL_FRAMES - 1)))
+      );
+
+      if (frameIndex !== lastDrawnFrameRef.current) {
+        drawFrame(frameIndex);
+      }
+
+      animationFrameRef.current = requestAnimationFrame(renderLoop);
+    };
+
+    animationFrameRef.current = requestAnimationFrame(renderLoop);
 
     return () => {
+      running = false;
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [currentFrameIndex, drawFrame, isReducedMotion]);
+  }, [drawFrame, isReducedMotion]);
 
   return (
     <div className="relative w-full h-full overflow-hidden bg-slate-900">

@@ -20,7 +20,7 @@ export function AirplaneScrollHero({ onOpenEligibility }) {
     return () => mediaQuery.removeEventListener?.('change', handleChange);
   }, []);
 
-  // Listen to window scroll to update scroll progress (0 to 1)
+  // Smooth scroll event listener
   useEffect(() => {
     if (isReducedMotion) return;
 
@@ -44,7 +44,6 @@ export function AirplaneScrollHero({ onOpenEligibility }) {
             return;
           }
 
-          // Calculate how far down the section user has scrolled
           const currentScroll = -rect.top;
           const progress = Math.max(0, Math.min(1, currentScroll / totalScrollableHeight));
 
@@ -57,26 +56,43 @@ export function AirplaneScrollHero({ onOpenEligibility }) {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial check
+    handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isReducedMotion]);
 
+  // Auto-scroll smooth helper function
+  const scrollToNextSection = () => {
+    if (!heroRef.current) return;
+    const heroElement = heroRef.current;
+    const heroBottom = heroElement.offsetTop + heroElement.offsetHeight - window.innerHeight;
+    
+    window.scrollTo({
+      top: heroBottom + 10,
+      behavior: 'smooth',
+    });
+  };
+
+  const handleApplyForVisa = () => {
+    const targetElement = document.getElementById('featured-visa-programs');
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   // Compute text fade and move transforms based on scrollProgress
-  // Text stays 100% visible from 0 to 0.20, then fades out smoothly to 0 by 0.65
   const textOpacity = isReducedMotion
     ? 1
-    : scrollProgress < 0.2
+    : scrollProgress < 0.18
     ? 1
-    : Math.max(0, 1 - (scrollProgress - 0.2) / 0.45);
+    : Math.max(0, 1 - (scrollProgress - 0.18) / 0.45);
 
   const textTranslateY = isReducedMotion
     ? 0
-    : scrollProgress < 0.2
+    : scrollProgress < 0.18
     ? 0
-    : -((scrollProgress - 0.2) / 0.45) * 50;
+    : -((scrollProgress - 0.18) / 0.45) * 50;
 
-  // Pointer events on content overlay: disable when content is fully faded out
   const contentPointerEvents = textOpacity < 0.1 ? 'none' : 'auto';
 
   return (
@@ -142,7 +158,7 @@ export function AirplaneScrollHero({ onOpenEligibility }) {
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
                 <MagneticButton
-                  onClick={onOpenEligibility}
+                  onClick={handleApplyForVisa}
                   className="bg-primary-container hover:bg-primary text-pure-white font-bold text-sm px-8 py-4 rounded-pill shadow-lg hover:shadow-xl text-center inline-flex items-center justify-center gap-2 transition-all cursor-pointer"
                 >
                   <span>Apply for Visa</span>
@@ -196,15 +212,20 @@ export function AirplaneScrollHero({ onOpenEligibility }) {
 
           </div>
 
-          {/* Scroll Indicator Prompt */}
-          <div className="flex flex-col items-center justify-center pb-2 text-pure-white/70">
-            <span className="text-[11px] uppercase tracking-widest font-semibold mb-1 animate-pulse">
-              {scrollProgress > 0.8 ? 'Scroll down for services' : 'Scroll to experience flight'}
+          {/* Interactive Scroll Indicator Prompt */}
+          <button
+            onClick={scrollToNextSection}
+            type="button"
+            className="flex flex-col items-center justify-center pb-2 text-pure-white/80 hover:text-volt transition-colors cursor-pointer group mx-auto bg-transparent border-0 outline-none"
+            aria-label="Auto scroll to explore services"
+          >
+            <span className="text-[11px] uppercase tracking-widest font-semibold mb-1 group-hover:underline">
+              {scrollProgress > 0.8 ? 'Scroll down for services' : 'Scroll or Click to Explore'}
             </span>
-            <span className="material-symbols-outlined text-lg animate-bounce text-volt">
+            <span className="material-symbols-outlined text-xl animate-bounce text-volt group-hover:scale-125 transition-transform">
               expand_more
             </span>
-          </div>
+          </button>
 
         </div>
 

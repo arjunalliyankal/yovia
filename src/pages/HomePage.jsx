@@ -110,7 +110,7 @@ export function HomePage({ onOpenEligibility }) {
         </section>
 
         {/* ==================== POPULAR DESTINATIONS GRID ==================== */}
-        <section className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-10 py-16">
+        <section id="featured-visa-programs" className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-10 py-16">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
               <div className="text-xs font-bold tracking-widest uppercase text-primary mb-1">
