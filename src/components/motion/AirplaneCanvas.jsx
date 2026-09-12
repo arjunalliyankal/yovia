@@ -25,6 +25,24 @@ export function AirplaneCanvas({ progress = 0, isReducedMotion = false }) {
     targetProgressRef.current = progress;
   }, [progress]);
 
+  // Find best loaded frame close to target frame to guarantee flicker-free rendering
+  const getBestAvailableImage = (targetIndex) => {
+    if (imagesRef.current[targetIndex]?.complete && imagesRef.current[targetIndex]?.naturalWidth > 0) {
+      return { img: imagesRef.current[targetIndex], index: targetIndex };
+    }
+    for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
+      const prev = targetIndex - offset;
+      if (prev >= 0 && imagesRef.current[prev]?.complete && imagesRef.current[prev]?.naturalWidth > 0) {
+        return { img: imagesRef.current[prev], index: prev };
+      }
+      const next = targetIndex + offset;
+      if (next < TOTAL_FRAMES && imagesRef.current[next]?.complete && imagesRef.current[next]?.naturalWidth > 0) {
+        return { img: imagesRef.current[next], index: next };
+      }
+    }
+    return null;
+  };
+
   // Helper to draw a given frame onto the canvas
   const drawFrame = useCallback((frameIndex) => {
     const canvas = canvasRef.current;
@@ -33,18 +51,11 @@ export function AirplaneCanvas({ progress = 0, isReducedMotion = false }) {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const img = imagesRef.current[frameIndex];
-    if (!img || !img.complete || img.naturalWidth === 0) {
-      // Fallback: draw frame 0 if current frame not ready yet
-      const fallbackImg = imagesRef.current[0];
-      if (fallbackImg && fallbackImg.complete && fallbackImg.naturalWidth > 0) {
-        renderImageToCanvas(ctx, canvas, fallbackImg);
-      }
-      return;
-    }
+    const match = getBestAvailableImage(frameIndex);
+    if (!match) return;
 
-    renderImageToCanvas(ctx, canvas, img);
-    lastDrawnFrameRef.current = frameIndex;
+    renderImageToCanvas(ctx, canvas, match.img);
+    lastDrawnFrameRef.current = match.index;
   }, []);
 
   const renderImageToCanvas = (ctx, canvas, img) => {
@@ -156,10 +167,10 @@ export function AirplaneCanvas({ progress = 0, isReducedMotion = false }) {
     const renderLoop = () => {
       if (!running) return;
 
-      // Lerp factor: 0.15 for buttery smooth damping without delay
+      // Responsive lerp factor for fluid frame damping
       const diff = targetProgressRef.current - currentProgressRef.current;
       if (Math.abs(diff) > 0.0001) {
-        currentProgressRef.current += diff * 0.15;
+        currentProgressRef.current += diff * 0.18;
       } else {
         currentProgressRef.current = targetProgressRef.current;
       }

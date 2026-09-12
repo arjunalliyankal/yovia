@@ -65,10 +65,10 @@ export function AirplaneScrollHero({ onOpenEligibility }) {
   const scrollToNextSection = () => {
     if (!heroRef.current) return;
     const heroElement = heroRef.current;
-    const heroBottom = heroElement.offsetTop + heroElement.offsetHeight - window.innerHeight;
-    
+    const heroBottom = heroElement.offsetTop + heroElement.offsetHeight;
+
     window.scrollTo({
-      top: heroBottom + 10,
+      top: heroBottom,
       behavior: 'smooth',
     });
   };
@@ -83,23 +83,23 @@ export function AirplaneScrollHero({ onOpenEligibility }) {
   // Compute text fade and move transforms based on scrollProgress
   const textOpacity = isReducedMotion
     ? 1
-    : scrollProgress < 0.18
-    ? 1
-    : Math.max(0, 1 - (scrollProgress - 0.18) / 0.45);
+    : scrollProgress < 0.12
+      ? 1
+      : Math.max(0, 1 - (scrollProgress - 0.12) / 0.48);
 
   const textTranslateY = isReducedMotion
     ? 0
-    : scrollProgress < 0.18
-    ? 0
-    : -((scrollProgress - 0.18) / 0.45) * 50;
+    : scrollProgress < 0.12
+      ? 0
+      : -((scrollProgress - 0.12) / 0.48) * 35;
 
-  const contentPointerEvents = textOpacity < 0.1 ? 'none' : 'auto';
+  const contentPointerEvents = textOpacity < 0.05 ? 'none' : 'auto';
 
   return (
-    <div ref={heroRef} className="relative w-full h-[320vh] bg-ink">
+    <div ref={heroRef} className="relative w-full h-[185vh] bg-ink">
       {/* Sticky viewport area */}
       <div className="sticky top-0 w-full h-screen overflow-hidden flex flex-col justify-between">
-        
+
         {/* Background Airplane Canvas */}
         <div className="absolute inset-0 z-0">
           <AirplaneCanvas progress={scrollProgress} isReducedMotion={isReducedMotion} />
@@ -107,7 +107,7 @@ export function AirplaneScrollHero({ onOpenEligibility }) {
 
         {/* Foreground Content Container (z-20) */}
         <div
-          className="relative z-20 max-w-[1200px] w-full mx-auto px-4 sm:px-6 lg:px-10 pt-6 sm:pt-10 pb-8 flex flex-col justify-between h-full transition-all duration-300 ease-out"
+          className="relative z-20 max-w-[1200px] w-full mx-auto px-4 sm:px-6 lg:px-10 pt-6 sm:pt-10 pb-8 flex flex-col justify-between h-full will-change-[opacity,transform]"
           style={{
             opacity: textOpacity,
             transform: `translateY(${textTranslateY}px)`,
@@ -141,7 +141,7 @@ export function AirplaneScrollHero({ onOpenEligibility }) {
 
           {/* Main Hero Copy & Cards Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center my-auto py-4">
-            
+
             {/* Left Copy Column */}
             <div className="lg:col-span-8 space-y-5 text-left">
               <h1 className="text-3xl sm:text-5xl lg:text-[58px] font-extrabold text-pure-white tracking-tight leading-[1.1] drop-shadow-md">
